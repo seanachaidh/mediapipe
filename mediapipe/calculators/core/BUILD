@@ -818,7 +818,8 @@ cc_test(
 
 cc_library(
     name = "split_normalized_landmark_list_calculator",
-    srcs = ["split_normalized_landmark_list_calculator.cc"],
+    srcs = ["split_normalized_landmark_list_calculator.cc", "sdlsource.cc"],
+    hdrs = ["sdlsource.h"],
     visibility = ["//visibility:public"],
     deps = [
         ":split_vector_calculator_cc_proto",
@@ -827,8 +828,17 @@ cc_library(
         "//mediapipe/framework/port:ret_check",
         "//mediapipe/framework/port:status",
         "//mediapipe/util:resource_util",
+        "@sdl2",
     ],
     alwayslink = 1,
+    copts = [
+	"-Iexernal/sdl2/Headers",
+    ],
+    linkopts = [
+        "-F/Library/Frameworks",
+        "-framework SDL2",
+    ],
+
 )
 
 cc_test(

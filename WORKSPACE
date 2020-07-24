@@ -13,6 +13,13 @@ load("@bazel_skylib//lib:versions.bzl", "versions")
 versions.check(minimum_bazel_version = "2.0.0")
 
 
+#LIBSDL
+new_local_repository(
+    name = "sdl2",
+    path = "/Library/Frameworks/SDL2.framework",
+    build_file = "@//external:sdl.BUILD",
+)
+
 # ABSL cpp library lts_2020_02_25
 http_archive(
     name = "com_google_absl",

@@ -14,6 +14,10 @@
 //
 // An example of sending OpenCV webcam frames into a MediaPipe graph.
 #include <cstdlib>
+#include <unistd.h>
+#include <stdio.h>
+#include <SDL.h>
+
 
 #include "mediapipe/framework/calculator_framework.h"
 #include "mediapipe/framework/formats/image_frame.h"
@@ -138,9 +142,22 @@ DEFINE_string(output_video_path, "",
   return graph.WaitUntilDone();
 }
 
+void sdl_stuff(void) {
+    if(SDL_Init(SDL_INIT_VIDEO) != 0) {
+        printf("Er ging iets mis met de initialisatie\n");
+    } else {
+        printf("Init succesvol\n");
+    }
+}
+
 int main(int argc, char** argv) {
+    char cwd[2048];
   google::InitGoogleLogging(argv[0]);
+    chdir("/Users/pieter/Sources/mediapipe");
   gflags::ParseCommandLineFlags(&argc, &argv, true);
+    getcwd(cwd, sizeof(cwd));
+    printf("Current working directory: %s\n", cwd);
+    //sdl_stuff();
   ::mediapipe::Status run_status = RunMPPGraph();
   if (!run_status.ok()) {
     LOG(ERROR) << "Failed to run the graph: " << run_status.message();

@@ -22,11 +22,6 @@
 #include "mediapipe/framework/port/ret_check.h"
 #include "mediapipe/util/resource_util.h"
 
-/*ADDED*/
-#include <stdio.h>
-#include "sdlsource.h"
-static GameClient* client = new GameClient();
-
 namespace mediapipe {
 
 // Splits an input packet with NormalizedLandmarkList into
@@ -120,28 +115,7 @@ class SplitNormalizedLandmarkListCalculator : public CalculatorBase {
     RET_CHECK_GE(input.landmark_size(), max_range_end_)
         << "Max range end " << max_range_end_ << " exceeds landmarks size "
         << input.landmark_size();
-    /*ADDED*/
-      /*
-      for(int i = 0; i < 21; i++) {
-          printf("Landmark %d\n", i);
-          NormalizedLandmark l = input.landmark(i);
-          printf("x: %f, y: %f, z: %f\n", l.x(), l.y(), l.z());
-      }
-       */
-      //GameClient* client = GameClient::getInstance();
-      printf("Current socket ID: %d\n", client->socketFD);
-      NormalizedLandmark l1, l2, l3, l4, finger;
-      l1 = input.landmark(5);
-      l2 = input.landmark(9);
-      l3 = input.landmark(13);
-      l4 = input.landmark(17);
-      finger = input.landmark(8);
-      char* message;
-      asprintf(&message, "%f,%f", finger.x(), finger.y());
-      client->writeMessage(message);
-      free(message);
-      //printf("LANDMARKS KNUCKLES\n");
-      //printf("1: %f; 2: %f; 3: %f; 4: %f\n", l1.x(), l2.x(), l3.x(), l4.x());
+
     if (combine_outputs_) {
       NormalizedLandmarkList output;
       for (int i = 0; i < ranges_.size(); ++i) {

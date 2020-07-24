@@ -29,6 +29,15 @@ cc_binary(
     deps = [
         "//mediapipe/examples/desktop:demo_run_graph_main",
         "//mediapipe/graphs/hand_tracking:desktop_tflite_calculators",
+	"@sdl2",
+
+    ],
+    copts = [
+        "-Iexternal/sdl2/Headers",
+    ],
+    linkopts = [
+        "-F/Library/Frameworks",
+        "-framework SDL2",
     ],
 )
 

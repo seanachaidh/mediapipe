@@ -36,7 +36,8 @@ cc_library(
 
 cc_library(
     name = "demo_run_graph_main",
-    srcs = ["demo_run_graph_main.cc"],
+    srcs = ["demo_run_graph_main.cc", "sdlsource.cc"],
+    hdrs = ["sdlsource.h"], 
     deps = [
         "//mediapipe/framework:calculator_framework",
         "//mediapipe/framework/formats:image_frame",
@@ -48,6 +49,15 @@ cc_library(
         "//mediapipe/framework/port:opencv_video",
         "//mediapipe/framework/port:parse_text_proto",
         "//mediapipe/framework/port:status",
+        "@sdl2",
+    ],
+    copts = [
+        "-Iexternal/sdl2/Headers",
+        "-Isdlinclude",
+    ],
+    linkopts = [
+        "-F/Library/Frameworks",
+        "-framework SDL2",
     ],
 )
 
